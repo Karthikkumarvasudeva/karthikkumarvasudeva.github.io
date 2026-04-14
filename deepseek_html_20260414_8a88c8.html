@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Karthik Kumar Vasudeva — Applied & Computational Mathematics</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080B10;--bg2:#0D1118;--bg3:#111620;
+  --surface:#141923;--surface2:#1A2030;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
+  --ink:#F0EDE8;--ink2:#9BA3B0;--ink3:#5A6270;
+  --gold:#C8A96A;        /* changed from red to gold */
+  --gold2:#D9B86C;       /* lighter gold */
+  --gold-dim:rgba(200,169,106,0.3);
+  --mono:'JetBrains Mono',monospace;
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'Syne',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7;overflow-x:hidden;cursor:none}
+#cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:screen}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(200,169,106,0.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s}
+#fem-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 3rem;display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:1px solid var(--border)}
+nav::before{content:'';position:absolute;inset:0;background:rgba(8,11,16,0.88);backdrop-filter:blur(20px);z-index:-1}
+.nav-logo{font-family:var(--mono);font-size:0.75rem;color:var(--ink2);letter-spacing:0.12em;text-decoration:none}.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:var(--ink3);transition:color .2s}.nav-links a:hover{color:var(--gold)}
+/* removed .nav-cta (Hire Me) */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 3rem 5rem}
+.hero-eyebrow{font-family:var(--mono);font-size:0.7rem;color:var(--gold);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:rise .8s .3s forwards}
+.hero-name{font-family:var(--serif);font-size:clamp(4rem,8vw,8.5rem);line-height:0.94;letter-spacing:-0.02em;color:var(--ink);margin-bottom:0.6rem;opacity:0;animation:rise .9s .5s forwards}
+.hero-name em{font-style:italic;color:var(--gold)}
+.hero-sub{font-family:var(--mono);font-size:clamp(0.65rem,1vw,0.85rem);color:var(--ink3);letter-spacing:0.08em;margin-bottom:3.5rem;opacity:0;animation:rise .8s .7s forwards}
+.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;opacity:0;animation:rise .8s .9s forwards}
+.hero-desc{max-width:540px;font-size:1.05rem;color:var(--ink2);line-height:1.8;font-family:var(--serif);font-style:italic}
+.hero-desc b{color:var(--ink);font-style:normal;font-family:var(--sans);font-size:0.82rem;font-weight:700;letter-spacing:0.04em}
+.hero-actions{display:flex;gap:1rem;flex-shrink:0}
+.btn-gold{background:var(--gold);color:#080B10;padding:.85rem 2.2rem;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .15s;display:inline-block;font-weight:700}.btn-gold:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-ghost{border:1px solid var(--border2);color:var(--ink2);padding:.85rem 2.2rem;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:border-color .2s,color .2s;display:inline-block}.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.hero-scroll{position:absolute;right:3rem;bottom:3rem;font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.15em;text-transform:uppercase;writing-mode:vertical-lr;display:flex;align-items:center;gap:12px}.hero-scroll::after{content:'';width:1px;height:60px;background:linear-gradient(to bottom,var(--ink3),transparent)}
+.stats-strip{position:relative;z-index:2;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(13,17,24,0.96);display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-cell{padding:2.2rem 2.5rem;border-right:1px solid var(--border)}.stat-cell:last-child{border-right:none}
+.stat-n{font-family:var(--serif);font-size:3.4rem;color:var(--gold);line-height:1;margin-bottom:0.25rem}
+.stat-l{font-family:var(--mono);font-size:0.62rem;color:var(--ink3);letter-spacing:0.12em;text-transform:uppercase}
+.sec{position:relative;z-index:2;padding:7rem 3rem;max-width:1200px;margin:0 auto}
+.sec-label{font-family:var(--mono);font-size:0.62rem;color:var(--gold);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:1rem}.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.sec-h{font-family:var(--serif);font-size:clamp(2rem,4vw,3.4rem);line-height:1.05;color:var(--ink);margin-bottom:3.5rem}.sec-h em{color:var(--gold);font-style:italic}
+.about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:5rem;align-items:start}
+.about-p{color:var(--ink2);font-size:1rem;line-height:1.85;margin-bottom:1.4rem}.about-p b{color:var(--ink)}
+.sidebar{display:flex;flex-direction:column;gap:1px}
+.sitem{padding:1.2rem 1.5rem;background:var(--surface);border:1px solid var(--border);margin-bottom:1px;transition:border-color .2s,background .2s}.sitem:hover{border-color:var(--border2);background:var(--surface2)}
+.skey{font-family:var(--mono);font-size:0.6rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.3rem}
+.sval{font-size:0.85rem;color:var(--ink2)}
+.edu-tl{display:flex;flex-direction:column}
+.edu-row{display:grid;grid-template-columns:130px 1fr;gap:2rem;padding:2.5rem 0;border-bottom:1px solid var(--border);position:relative}
+.edu-row::before{content:'';position:absolute;left:122px;top:0;bottom:0;width:1px;background:var(--border)}
+.edu-row::after{content:'';position:absolute;left:116px;top:2.6rem;width:13px;height:13px;border:2px solid var(--gold);background:var(--bg);border-radius:50%}
+.edu-yr{font-family:var(--mono);font-size:0.65rem;color:var(--ink3);padding-top:3px}
+.edu-deg{font-family:var(--serif);font-size:1.35rem;color:var(--ink);margin-bottom:0.35rem;line-height:1.2}
+.edu-inst{font-family:var(--mono);font-size:0.72rem;color:var(--ink2);margin-bottom:0.3rem}
+.edu-advisors{font-family:var(--mono);font-size:0.68rem;color:var(--gold);margin-top:0.2rem}
+.edu-advisors a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}.edu-advisors a:hover{color:var(--gold2)}
+.edu-note{font-size:0.78rem;color:var(--gold);margin-top:0.35rem;font-family:var(--mono)}
+.res-hero{background:var(--surface);border:1px solid var(--border);padding:2.5rem;margin-bottom:2.5rem;position:relative;overflow:hidden}
+.res-hero::before{content:'∂';position:absolute;right:-0.5rem;bottom:-2rem;font-family:var(--serif);font-size:14rem;color:rgba(200,169,106,0.05);line-height:1;pointer-events:none;font-style:italic}
+.res-hero h3{font-family:var(--serif);font-size:1.55rem;color:var(--ink);margin-bottom:1rem;line-height:1.3}
+.res-hero p{color:var(--ink2);line-height:1.8;font-size:0.93rem}
+.rtags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem}
+.rtag{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.08em;padding:4px 11px;border:1px solid rgba(200,169,106,0.3);color:var(--gold);text-transform:uppercase}
+.pubs{display:flex;flex-direction:column;gap:1px}
+.pub{display:grid;grid-template-columns:55px 1fr auto;gap:1.5rem;padding:1.6rem;background:var(--surface);border:1px solid var(--border);align-items:start;transition:border-color .2s,background .2s}.pub:hover{border-color:var(--border2);background:var(--surface2)}
+.pub-n{font-family:var(--serif);font-size:2.4rem;color:rgba(200,169,106,0.2);line-height:1}
+.pub-t{font-size:0.92rem;font-weight:700;color:var(--ink);margin-bottom:0.3rem;line-height:1.5}
+.pub-m{font-family:var(--mono);font-size:0.65rem;color:var(--ink3);line-height:1.6}
+.pill{display:inline-block;font-family:var(--mono);font-size:0.58rem;letter-spacing:0.08em;padding:3px 10px;text-transform:uppercase;white-space:nowrap}
+.pill-pub{background:rgba(100,200,100,0.08);color:#6DC87A;border:1px solid rgba(100,200,100,0.18)}
+.pill-prep{background:rgba(200,169,106,0.08);color:var(--gold);border:1px solid rgba(200,169,106,0.2)}
+.t-intro{font-size:1rem;color:var(--ink2);font-family:var(--serif);font-style:italic;margin-bottom:2.5rem;max-width:620px}
+.t-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.t-group{background:var(--bg2);padding:2rem}
+.t-label{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border)}
+.c-row{display:flex;justify-content:space-between;align-items:baseline;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.03)}.c-row:last-child{border-bottom:none}
+.c-name{font-size:0.83rem;color:var(--ink2)}.c-term{font-family:var(--mono);font-size:0.6rem;color:var(--ink3)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.proj{background:var(--bg2);padding:2rem;position:relative;overflow:hidden;transition:background .3s}.proj:hover{background:var(--surface)}
+.proj-n{font-family:var(--serif);font-size:4rem;color:rgba(255,255,255,0.04);line-height:1;margin-bottom:1rem;font-style:italic;transition:color .3s}.proj:hover .proj-n{color:rgba(200,169,106,0.25)}
+.proj-lang{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;margin-bottom:0.7rem}
+.proj-t{font-size:0.92rem;font-weight:700;color:var(--ink);margin-bottom:0.7rem;line-height:1.4}
+.proj-d{font-size:0.8rem;color:var(--ink3);line-height:1.65}
+.sk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem}
+.sk-block-t{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border)}
+.sk-list{display:flex;flex-direction:column;gap:0.5rem}
+.sk-item{display:flex;align-items:center;gap:0.75rem;font-size:0.83rem;color:var(--ink2)}.sk-item::before{content:'';width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0}
+.aw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border)}
+.aw-card{background:var(--bg2);padding:1.75rem;border-left:3px solid transparent;transition:border-color .2s,background .2s}.aw-card:hover{border-color:var(--gold);background:var(--surface)}
+.aw-name{font-size:0.9rem;font-weight:700;color:var(--ink);margin-bottom:0.25rem}
+.aw-org{font-family:var(--mono);font-size:0.65rem;color:var(--ink3)}
+.aw-yr{font-family:var(--mono);font-size:0.65rem;color:var(--gold);margin-top:0.35rem}
+.talks{display:flex;flex-direction:column}
+.talk{display:grid;grid-template-columns:90px 1fr;gap:2rem;padding:1.4rem 0;border-bottom:1px solid var(--border)}
+.talk-yr{font-family:var(--mono);font-size:0.65rem;color:var(--ink3);padding-top:2px}
+.talk-t{font-size:0.88rem;color:var(--ink);margin-bottom:0.2rem}
+.talk-ev{font-family:var(--mono);font-size:0.65rem;color:var(--ink3)}
+.ct-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:center}
+.ct-big{font-family:var(--serif);font-size:clamp(2.4rem,5vw,4rem);color:var(--ink);line-height:1.1;margin-bottom:1.5rem}.ct-big em{color:var(--gold);font-style:italic}
+.ct-sub{color:var(--ink2);font-size:0.95rem;margin-bottom:2.5rem;line-height:1.7}
+.ct-links{display:flex;flex-direction:column}
+.ct-link{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0;border-bottom:1px solid var(--border);text-decoration:none;color:var(--ink2);font-size:0.88rem;transition:color .2s}.ct-link:hover{color:var(--gold)}
+.ct-link-lbl{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--ink3);text-transform:uppercase;margin-bottom:0.15rem}
+.ct-arr{opacity:0;transition:opacity .2s,transform .2s;color:var(--gold)}.ct-link:hover .ct-arr{opacity:1;transform:translateX(4px)}
+.ct-info{background:var(--surface);border:1px solid var(--border);padding:2.5rem}
+.ct-info-row{padding:1rem 0;border-bottom:1px solid var(--border)}.ct-info-row:last-child{border-bottom:none}
+.ct-info-k{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.12em;color:var(--gold);text-transform:uppercase;margin-bottom:0.3rem}
+.ct-info-v{font-size:0.88rem;color:var(--ink)}
+footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;background:var(--bg)}
+.ft-l{font-family:var(--mono);font-size:0.9rem;color:var(--ink2)}  /* increased font size */
+.ft-r{display:flex;gap:2rem}.ft-r a{font-family:var(--mono);font-size:0.9rem;color:var(--ink3);text-decoration:none;transition:color .2s}.ft-r a:hover{color:var(--gold)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}.reveal.on{opacity:1;transform:none}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@media(max-width:900px){
+  nav{padding:0 1.5rem}.nav-links{display:none}
+  .hero{padding:0 1.5rem 4rem}
+  .sec{padding:5rem 1.5rem}
+  .about-grid,.ct-grid{grid-template-columns:1fr}
+  .proj-grid,.t-grid,.sk-grid,.aw-grid{grid-template-columns:1fr}
+  .stats-strip{grid-template-columns:1fr 1fr}
+  .edu-row{grid-template-columns:80px 1fr}.edu-row::before{left:73px}.edu-row::after{left:67px}
+  footer{padding:2rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<canvas id="fem-canvas"></canvas>
+
+<nav>
+  <a href="#" class="nav-logo"><span>//</span>&nbsp;KKV</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#teaching">Teaching</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#talks-awards">Talks</a></li>
+    <li><a href="#awards-section">Awards</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <!-- Hire Me button removed -->
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Doctoral Candidate &nbsp;·&nbsp; Texas Tech University &nbsp;·&nbsp; Applied Mathematics</div>
+  <h1 class="hero-name">Karthik Kumar<br/><em>Vasudeva</em></h1>
+  <div class="hero-sub">Finite Element Methods &nbsp;/&nbsp; Optimal Control &nbsp;/&nbsp; Scientific Computing &nbsp;/&nbsp; PDE-Constrained Optimization</div>
+  <div class="hero-bottom">
+    <p class="hero-desc">I develop <b>mixed finite element discretizations</b> for optimal control problems constrained by higher-order PDEs — building scalable, mathematically rigorous solvers that bridge deep theory with high-performance computation.</p>
+    <div class="hero-actions">
+      <a href="mailto:karthik.vasudeva@ttu.edu" class="btn-gold">Get In Touch</a>
+      <a href="https://scholar.google.com/citations?user=VcZZf-4AAAAJ&hl=en" target="_blank" class="btn-ghost">Google Scholar ↗</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<div class="stats-strip">
+  <div class="stat-cell"><div class="stat-n">4+</div><div class="stat-l">Publications & Preprints</div></div>
+  <div class="stat-cell"><div class="stat-n">8</div><div class="stat-l">Talks & Presentations</div></div>
+  <div class="stat-cell"><div class="stat-n">12+</div><div class="stat-l">Courses Taught</div></div>
+  <div class="stat-cell"><div class="stat-n">9</div><div class="stat-l">Awards & Scholarships</div></div>
+</div>
+
+<div class="sec" id="about">
+  <div class="sec-label">01 &mdash; About</div>
+  <h2 class="sec-h">Bridging rigorous <em>mathematics</em><br/>with scalable computation</h2>
+  <div class="about-grid reveal">
+    <div>
+      <p class="about-p">I am a <b>Doctoral Candidate and Instructor of Record</b> in the Department of Mathematics &amp; Statistics at Texas Tech University, advised by Dr. Eugenio Aulisa (Chair) and Dr. Giorgio Bornia (Co-Chair). My dissertation focuses on <b>Finite Element Methods for Boundary Control Problems Constrained by the Mixed Biharmonic Equation.</b></p>
+      <p class="about-p">My research sits at the intersection of numerical analysis, PDE-constrained optimization, and scientific computing. I design mixed finite element formulations, prove well-posedness and error estimates in Sobolev spaces, and implement <b>large-scale sparse saddle-point solvers in C++</b> — combining mathematical depth with engineering-grade software.</p>
+      <p class="about-p">As Instructor of Record for classes of <b>90–120 undergraduate students</b>, I have designed full courses — from College Algebra through Calculus III — including syllabi, lectures, exams, and computational assignments. I believe rigorous mathematics should be taught with clarity, enthusiasm, and purpose.</p>
+    </div>
+    <div class="sidebar">
+      <div class="sitem"><div class="skey">Position</div><div class="sval">Doctoral Candidate &amp; Instructor of Record<br/>Texas Tech University</div></div>
+      <div class="sitem"><div class="skey">Expected Graduation</div><div class="sval">July 2026</div></div>
+      <div class="sitem"><div class="skey">Research Advisors</div><div class="sval">Dr. Eugenio Aulisa (TTU)<br/>Dr. Giorgio Bornia (U. Bologna)</div></div>
+      <div class="sitem"><div class="skey">Memberships</div><div class="sval">American Mathematical Society<br/>SIAM</div></div>
+      <!-- Languages removed -->
+    </div>
+  </div>
+</div>
+
+<div class="sec" style="padding-top:0" id="education">
+  <div class="sec-label">02 &mdash; Education</div>
+  <h2 class="sec-h">Academic <em>foundations</em></h2>
+  <div class="edu-tl reveal">
+    <div class="edu-row">
+      <div class="edu-yr">2021 &mdash; Present</div>
+      <div>
+        <div class="edu-deg">Doctor of Philosophy in Applied Mathematics</div>
+        <div class="edu-inst"><a href="https://www.depts.ttu.edu/math/" target="_blank" style="color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)">Texas Tech University</a> &middot; Lubbock, Texas, USA</div>
+        <div class="edu-advisors">Advisors: <a href="https://www.depts.ttu.edu/math/facultystaff/bio.php?id=210" target="_blank">Dr. Eugenio Aulisa</a> &nbsp;|&nbsp; <a href="https://www.unibo.it/sitoweb/giorgio.bornia/en" target="_blank">Dr. Giorgio Bornia</a></div>
+        <div class="edu-note">Expected July 2026</div>
+      </div>
+    </div>
+    <div class="edu-row">
+      <div class="edu-yr">2019 &mdash; 2021</div>
+      <div>
+        <div class="edu-deg">M.S. in Applied &amp; Computational Mathematics</div>
+        <div class="edu-inst"><a href="https://www.tamucc.edu/science/departments/math-and-statistics/index.php" target="_blank" style="color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)">Texas A&amp;M University–Corpus Christi</a> &middot; Texas, USA</div>
+        <div class="edu-advisors">Advisor: <a href="https://www.tamucc.edu/files/php/views/faculty-details.php?profile=Mallikarjunaiah_M" target="_blank">Dr. Mallikarjunaiah S. Muddamallappa</a></div>
+        <div class="edu-note">International Presidential Graduate Scholarship</div>
+      </div>
+    </div>
+    <div class="edu-row">
+      <div class="edu-yr">2014 &mdash; 2018</div>
+      <div><div class="edu-deg">B.S. in Civil Engineering</div><div class="edu-inst">Visvesvaraya Technological University &middot; Karnataka, India</div><div class="edu-note">Outstanding Student Award &middot; 4.0 / 4.0</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" style="padding-top:0" id="research">
+  <div class="sec-label">03 &mdash; Research &amp; Publications</div>
+  <h2 class="sec-h">Finite elements for <em>optimal control</em></h2>
+  <div class="reveal">
+    <div class="res-hero">
+      <h3>Dissertation: Finite Element Methods for Boundary Control Problems Constrained by the Mixed Biharmonic Equation</h3>
+      <p>Developing mixed finite element discretizations for PDE-constrained optimal control problems governed by fourth-order elliptic equations. Includes deriving well-posedness in Sobolev spaces, proving a priori error estimates, implementing lifting-function techniques for Dirichlet boundary controls, and building scalable C++ solvers for large sparse saddle-point systems using Hermann–Miyoshi and Ciarlet–Raviart discretizations.</p>
+      <div class="rtags"><span class="rtag">Finite Element Methods</span><span class="rtag">Optimal Control</span><span class="rtag">Biharmonic Equation</span><span class="rtag">Sobolev Spaces</span><span class="rtag">Saddle-Point Systems</span><span class="rtag">C++ Solvers</span><span class="rtag">A Priori Error Estimates</span></div>
+    </div>
+    <div class="pubs">
+      <div class="pub"><div class="pub-n">1</div><div><div class="pub-t">Distributed Control Approach for Boundary Control Problem Constrained by the Biharmonic Equation</div><div class="pub-m">Manuscript in preparation for submission to a peer-reviewed journal.</div></div><span class="pill pill-prep">In Prep</span></div>
+      <div class="pub"><div class="pub-n">2</div><div><div class="pub-t">Mixed Finite Element Methods for Boundary Control Problems Constrained by the Biharmonic Equation</div><div class="pub-m">Abstract accepted &mdash; 15th AIMS Conference, Athens, Greece, 2026.</div></div><span class="pill pill-prep">In Prep</span></div>
+      <div class="pub"><div class="pub-n">3</div><div><div class="pub-t">Finite element model for a coupled thermo-mechanical system in nonlinear strain-limiting thermoelastic body</div><div class="pub-m">Yoon, H.C., Vasudeva, K.K., &amp; Mallikarjunaiah, S.M. &mdash; Communications in Nonlinear Science and Numerical Simulation, 2022.</div></div><span class="pill pill-pub">Published</span></div>
+      <div class="pub"><div class="pub-n">4</div><div><div class="pub-t">Unifying Sky and Chain: A Perspective on Blockchain's Role in UAV Swarms</div><div class="pub-m">Phadke, A., Sekharan, C.N., Vasudeva, K.K., Kar, D. &mdash; 2024 2nd International Conference on AI, Blockchain, and IoT (AIBThings). IEEE, 2024.</div></div><span class="pill pill-pub">Published</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" style="padding-top:0" id="teaching">
+  <div class="sec-label">04 &mdash; Teaching</div>
+  <h2 class="sec-h">Courses <em>designed</em> &amp; delivered</h2>
+  <p class="t-intro">Instructor of Record for 90–120 student undergraduate classes. Full course design — syllabus, lectures, exams, and programming-based assignments emphasizing mathematical rigor and computational thinking.</p>
+  <div class="t-grid reveal"><div class="t-group"><div class="t-label">Texas Tech University &mdash; Instructor of Record (2022–2026)</div><div class="c-row"><span class="c-name">Calculus III (Math 2450)</span><span class="c-term">Summer 2026</span></div><div class="c-row"><span class="c-name">Calculus II (Math 1452)</span><span class="c-term">Spring 2026</span></div><div class="c-row"><span class="c-name">Intro Mathematical Analysis I (Math 1330)</span><span class="c-term">Fall 2025</span></div><div class="c-row"><span class="c-name">Linear Algebra (Math 2360)</span><span class="c-term">Summer 2025</span></div><div class="c-row"><span class="c-name">Calculus I (Math 1451)</span><span class="c-term">Spring 2025</span></div><div class="c-row"><span class="c-name">Calculus I (Math 1451)</span><span class="c-term">Summer &amp; Spring 2024</span></div><div class="c-row"><span class="c-name">College Algebra (Math 1320)</span><span class="c-term">Fall 2023</span></div><div class="c-row"><span class="c-name">Intro Math Analysis II (Math 1331)</span><span class="c-term">Spring 2023</span></div><div class="c-row"><span class="c-name">Intro Math Analysis I (Math 1330)</span><span class="c-term">Summer 2023, Fall 2022</span></div></div><div class="t-group"><div class="t-label">TexPREP-Lubbock &mdash; Teaching Faculty (2024–2026)</div><div class="c-row"><span class="c-name">Introduction to C++ Programming</span><span class="c-term">2024, 2025, 2026</span></div><div class="c-row"><span class="c-name">Programming with JavaScript I &amp; II</span><span class="c-term">2024, 2025, 2026</span></div><div class="c-row"><span class="c-name">Introduction to Python</span><span class="c-term">Summer 2026</span></div><div class="t-label" style="margin-top:1.75rem">Texas A&amp;M CC &mdash; GTA (2019–2021)</div><div class="c-row"><span class="c-name">Calculus I, II &amp; III</span><span class="c-term">2019–2021</span></div><div class="c-row"><span class="c-name">Statistics for Life (Math 1442)</span><span class="c-term">2019</span></div></div></div>
+</div>
+
+<div class="sec" style="padding-top:0" id="projects">
+  <div class="sec-label">05 &mdash; Projects</div>
+  <h2 class="sec-h">Computational work that <em>matters</em></h2>
+  <div class="proj-grid reveal"><div class="proj"><div class="proj-n">01</div><div class="proj-lang">C++ · FEM · Saddle-Point</div><div class="proj-t">Boundary Optimal Control for Biharmonic Equations</div><div class="proj-d">Mixed FEM solvers for boundary optimal control constrained by the biharmonic equation. Hermann–Miyoshi and Ciarlet–Raviart discretizations, lifting-function techniques, optimal convergence on large sparse systems.</div></div><div class="proj"><div class="proj-n">02</div><div class="proj-lang">C++ · Variational Formulations</div><div class="proj-t">Distributed Optimal Control via FEM</div><div class="proj-d">Distributed optimal control solvers for elliptic and biharmonic PDEs — error estimation, convergence studies, large-scale sparse linear systems with performance-aware scientific programming.</div></div><div class="proj"><div class="proj-n">03</div><div class="proj-lang">C++ · Inf-Sup Stability</div><div class="proj-t">Mixed FEM for Higher-Order PDEs</div><div class="proj-d">Mixed formulations for fourth-order PDEs reducing regularity requirements. Block-matrix structures, inf-sup stability, and scalable solver design connecting variational formulations with numerical linear algebra.</div></div><div class="proj"><div class="proj-n">04</div><div class="proj-lang">Python · PyTorch · PINN</div><div class="proj-t">Neural Network Solvers for DEs</div><div class="proj-d">Physics-informed neural networks approximating ODE solutions. Loss-based training, GPU-accelerated optimization, automatic differentiation — bridging classical numerical analysis with modern ML.</div></div><div class="proj"><div class="proj-n">05</div><div class="proj-lang">Python · Parallel · HPC</div><div class="proj-t">Parallel QR Factorization</div><div class="proj-d">QR Factorization with partial and full pivoting using shared-memory parallelism. Numerical stability analysis, flop counting, and scalability study relevant to GPU-accelerated HPC architectures.</div></div><div class="proj"><div class="proj-n">06</div><div class="proj-lang">C++ · JavaScript · p5.js</div><div class="proj-t">Computational STEM Programming</div><div class="proj-d">Designed hands-on C++ and JavaScript modules at TexPREP — Morse-code translators to Mandelbrot set visualizations — connecting mathematical modeling, algorithms, and scalable computation.</div></div></div>
+</div>
+
+<!-- Talks section (standalone) -->
+<div class="sec" style="padding-top:0" id="talks-awards">
+  <div class="sec-label">06 &mdash; Talks & Presentations</div>
+  <h2 class="sec-h">Sharing the <em>work</em></h2>
+  <div class="talks reveal">
+    <div class="talk"><div class="talk-yr">Apr 2026</div><div><div class="talk-t">Boundary Optimal Control Problem Constrained by the Fourth-Order Elliptic PDE</div><div class="talk-ev">Annual Cross-Disciplinary Faculty Conference, Texas Tech University</div></div></div>
+    <div class="talk"><div class="talk-yr">Mar 2026</div><div><div class="talk-t">Mixed FEM for Optimal Control Problems Constrained by the Biharmonic Equation</div><div class="talk-ev">Graduate Student Research Day, SIAM Chapter, Texas Tech University</div></div></div>
+    <div class="talk"><div class="talk-yr">Mar 2026</div><div><div class="talk-t">Distributed Control Approach for Boundary Control Problems — Biharmonic Equation (Poster)</div><div class="talk-ev">25th Annual Graduate Poster Competition, Texas Tech University</div></div></div>
+    <div class="talk"><div class="talk-yr">Dec 2025</div><div><div class="talk-t">Mixed FEM for Boundary Control Problems Constrained by the Biharmonic Equation</div><div class="talk-ev">CBMS Conference — Research at the Interface of Applied Mathematics &amp; Machine Learning, University of Houston</div></div></div>
+    <div class="talk"><div class="talk-yr">Mar 2022</div><div><div class="talk-t">On a Finite Element Model for Two-Dimensional Thermoelastic Problem</div><div class="talk-ev">Graduate Student Research Day, SIAM Chapter, Texas Tech University</div></div></div>
+    <div class="talk"><div class="talk-yr">2021</div><div><div class="talk-t">On a Finite Element Model for Implicit Thermoelasticity</div><div class="talk-ev">5th Coastal Bend Mathematics &amp; Statistics Conference, Texas A&amp;M University–San Antonio</div></div></div>
+  </div>
+</div>
+
+<!-- Awards section standalone -->
+<div class="sec" style="padding-top:0" id="awards-section">
+  <div class="sec-label">07 &mdash; Awards & Honors</div>
+  <h2 class="sec-h">Recognition for <em>excellence</em></h2>
+  <div class="aw-grid reveal">
+    <div class="aw-card"><div class="aw-name">SIAM Teaching Award</div><div class="aw-org">Texas Tech University</div><div class="aw-yr">April 2026</div></div>
+    <div class="aw-card"><div class="aw-name">SIAM Graduate Research Day Award</div><div class="aw-org">Texas Tech University</div><div class="aw-yr">April 2026</div></div>
+    <div class="aw-card"><div class="aw-name">CBMS Conference Travel Grant</div><div class="aw-org">University of Houston</div><div class="aw-yr">December 2025</div></div>
+    <div class="aw-card"><div class="aw-name">Texas Tech SIAM Scholarship Award</div><div class="aw-org">Texas Tech University</div><div class="aw-yr">August 2025</div></div>
+    <div class="aw-card"><div class="aw-name">Thomas McLaughlin Scholarship</div><div class="aw-org">Texas Tech University</div><div class="aw-yr">August 2024</div></div>
+    <div class="aw-card"><div class="aw-name">Gordon Fuller Mathematics Scholarship</div><div class="aw-org">Texas Tech University</div><div class="aw-yr">August 2023</div></div>
+    <div class="aw-card"><div class="aw-name">International Presidential Graduate Scholarship</div><div class="aw-org">Texas A&amp;M University–Corpus Christi</div><div class="aw-yr">January 2021</div></div>
+    <div class="aw-card"><div class="aw-name">Outstanding Student Award &middot; 4.0 / 4.0</div><div class="aw-org">The Oxford College of Engineering, India</div><div class="aw-yr">June 2018</div></div>
+  </div>
+</div>
+
+<div class="sec" style="padding-top:0" id="contact">
+  <div class="sec-label">08 &mdash; Contact</div>
+  <div class="ct-grid reveal">
+    <div><h2 class="ct-big">Let's build<br/>something <em>rigorous</em></h2><p class="ct-sub">Open to faculty positions, postdoctoral opportunities, research collaborations, and teaching roles in applied &amp; computational mathematics.</p><div class="ct-links"><a href="mailto:karthik.vasudeva@ttu.edu" class="ct-link"><div><div class="ct-link-lbl">Email</div>karthik.vasudeva@ttu.edu</div><span class="ct-arr">→</span></a><a href="tel:+19793180822" class="ct-link"><div><div class="ct-link-lbl">Phone</div>(979) 318-0822</div><span class="ct-arr">→</span></a><a href="https://linkedin.com/in/karthik-kumar-vasudeva-30a84114b" target="_blank" class="ct-link"><div><div class="ct-link-lbl">LinkedIn</div>linkedin.com/in/karthik-kumar-vasudeva</div><span class="ct-arr">→</span></a><a href="https://scholar.google.com/citations?user=VcZZf-4AAAAJ&hl=en" target="_blank" class="ct-link"><div><div class="ct-link-lbl">Google Scholar</div>View All Publications</div><span class="ct-arr">→</span></a><a href="https://github.com/Karthikkumarvasudeva" target="_blank" class="ct-link"><div><div class="ct-link-lbl">GitHub</div>github.com/Karthikkumarvasudeva</div><span class="ct-arr">→</span></a></div></div>
+    <div class="ct-info"><div class="ct-info-row"><div class="ct-info-k">Department</div><div class="ct-info-v">Mathematics &amp; Statistics</div></div><div class="ct-info-row"><div class="ct-info-k">Institution</div><div class="ct-info-v">Texas Tech University</div></div><div class="ct-info-row"><div class="ct-info-k">Location</div><div class="ct-info-v">Lubbock, Texas 79409, USA</div></div><div class="ct-info-row"><div class="ct-info-k">Status</div><div class="ct-info-v">Doctoral Candidate — Expected July 2026</div></div><div class="ct-info-row"><div class="ct-info-k">Open To</div><div class="ct-info-v">Faculty &middot; Postdoc &middot; Research Collaboration</div></div></div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-l">© 2026 Karthik Kumar Vasudeva &nbsp;&middot;&nbsp; Texas Tech University</div>
+  <div class="ft-r"><a href="mailto:karthik.vasudeva@ttu.edu">Email</a><a href="https://linkedin.com/in/karthik-kumar-vasudeva-30a84114b" target="_blank">LinkedIn</a><a href="https://scholar.google.com/citations?user=VcZZf-4AAAAJ&hl=en" target="_blank">Scholar</a><a href="https://github.com/Karthikkumarvasudeva" target="_blank">GitHub</a></div>
+</footer>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function ar(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar)})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';ring.style.width='56px';ring.style.height='56px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='36px';ring.style.height='36px'});
+});
+
+/* FEM CANVAS (kept original but with gold tint accents) */
+(function(){
+  const cv=document.getElementById('fem-canvas'),ctx=cv.getContext('2d');
+  let W,H,nodes,tris,t=0;
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;build();}
+  function build(){
+    nodes=[]; const CW=88,CH=76,cols=Math.ceil(W/CW)+3,rows=Math.ceil(H/CH)+3;
+    for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){const off=(c%2)*38; nodes.push({bx:c*CW-44,by:r*CH+off-38,phase:Math.random()*Math.PI*2,freq:.5+Math.random()*.35,amp:9+Math.random()*15});}
+    tris=[]; const nc=Math.ceil(W/CW)+3,nr=Math.ceil(H/CH)+3;
+    for(let r=0;r<nr-1;r++) for(let c=0;c<nc-1;c++){const a=r*nc+c,b=r*nc+c+1,d=(r+1)*nc+c,e=(r+1)*nc+c+1; if(a<nodes.length&&b<nodes.length&&d<nodes.length)tris.push([a,b,d]); if(b<nodes.length&&e<nodes.length&&d<nodes.length)tris.push([b,e,d]);}
+  }
+  function gp(n,time){return{x:n.bx+Math.sin(time*n.freq+n.phase)*n.amp,y:n.by+Math.cos(time*n.freq*.72+n.phase+1.3)*n.amp*.68};}
+  function frame(time){
+    ctx.clearRect(0,0,W,H);
+    for(const[ai,bi,ci]of tris){const a=gp(nodes[ai],time),b=gp(nodes[bi],time),c=gp(nodes[ci],time); ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.lineTo(c.x,c.y); ctx.closePath();ctx.fillStyle='rgba(200,169,106,0.022)';ctx.fill();}
+    const drawn=new Set();
+    for(const[ai,bi,ci]of tris){for(const[p1,p2]of[[ai,bi],[bi,ci],[ai,ci]]){const k=p1<p2?`${p1}-${p2}`:`${p2}-${p1}`; if(drawn.has(k))continue; drawn.add(k); const pa=gp(nodes[p1],time),pb=gp(nodes[p2],time); const emx=(pa.x+pb.x)/(2*W)-.5,emy=(pa.y+pb.y)/(2*H)-.5; const dist=Math.sqrt(emx*emx+emy*emy); const alpha=Math.max(0,.5-dist*1.1); ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y); ctx.strokeStyle='#C8A96A';ctx.lineWidth=.65; ctx.globalAlpha=.06+alpha*.2;ctx.stroke();ctx.globalAlpha=1;}}
+    for(let i=0;i<nodes.length;i++){const pt=gp(nodes[i],time); if(pt.x<-100||pt.x>W+100||pt.y<-100||pt.y>H+100)continue; const d=Math.abs(Math.sin(time*nodes[i].freq+nodes[i].phase)); ctx.beginPath();ctx.arc(pt.x,pt.y,1.4+d*3,0,Math.PI*2); ctx.fillStyle='#C8A96A';ctx.globalAlpha=.08+d*.52;ctx.fill();ctx.globalAlpha=1;}
+    for(let w=0;w<4;w++){const ph=time*.28+w*1.57; const cx=(.15+w*.22)*W+Math.sin(time*.09+w*2.1)*W*.08; const cy=(.2+w*.18)*H+Math.cos(time*.07+w*1.7)*H*.08; const prog=ph%1; ctx.beginPath();ctx.arc(cx,cy,prog*200,0,Math.PI*2); ctx.strokeStyle='#C8A96A';ctx.lineWidth=1.2; ctx.globalAlpha=(1-prog)*.15;ctx.stroke();ctx.globalAlpha=1;}
+  }
+  function loop(ts){t=ts/1000;frame(t);requestAnimationFrame(loop);}
+  window.addEventListener('resize',resize);resize(); requestAnimationFrame(loop);
+})();
+
+/* SCROLL REVEAL */
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
