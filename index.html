@@ -12,8 +12,8 @@
   --surface:#141923;--surface2:#1A2030;
   --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
   --ink:#F0EDE8;--ink2:#9BA3B0;--ink3:#5A6270;
-  --gold:#C8A96A;        /* changed from red to gold */
-  --gold2:#D9B86C;       /* lighter gold */
+  --gold:#C8A96A;
+  --gold2:#D9B86C;
   --gold-dim:rgba(200,169,106,0.3);
   --mono:'JetBrains Mono',monospace;
   --serif:'Instrument Serif',Georgia,serif;
@@ -29,7 +29,6 @@ nav::before{content:'';position:absolute;inset:0;background:rgba(8,11,16,0.88);b
 .nav-logo{font-family:var(--mono);font-size:0.75rem;color:var(--ink2);letter-spacing:0.12em;text-decoration:none}.nav-logo span{color:var(--gold)}
 .nav-links{display:flex;gap:2.5rem;list-style:none}
 .nav-links a{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:var(--ink3);transition:color .2s}.nav-links a:hover{color:var(--gold)}
-/* removed .nav-cta (Hire Me) */
 .hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 3rem 5rem}
 .hero-eyebrow{font-family:var(--mono);font-size:0.7rem;color:var(--gold);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:rise .8s .3s forwards}
 .hero-name{font-family:var(--serif);font-size:clamp(4rem,8vw,8.5rem);line-height:0.94;letter-spacing:-0.02em;color:var(--ink);margin-bottom:0.6rem;opacity:0;animation:rise .9s .5s forwards}
@@ -117,7 +116,7 @@ nav::before{content:'';position:absolute;inset:0;background:rgba(8,11,16,0.88);b
 .ct-info-k{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.12em;color:var(--gold);text-transform:uppercase;margin-bottom:0.3rem}
 .ct-info-v{font-size:0.88rem;color:var(--ink)}
 footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;background:var(--bg)}
-.ft-l{font-family:var(--mono);font-size:0.9rem;color:var(--ink2)}  /* increased font size */
+.ft-l{font-family:var(--mono);font-size:0.9rem;color:var(--ink2)}
 .ft-r{display:flex;gap:2rem}.ft-r a{font-family:var(--mono);font-size:0.9rem;color:var(--ink3);text-decoration:none;transition:color .2s}.ft-r a:hover{color:var(--gold)}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}.reveal.on{opacity:1;transform:none}
 @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
@@ -130,6 +129,28 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
   .stats-strip{grid-template-columns:1fr 1fr}
   .edu-row{grid-template-columns:80px 1fr}.edu-row::before{left:73px}.edu-row::after{left:67px}
   footer{padding:2rem 1.5rem}
+}
+
+/* HOVER EFFECT FOR PROJECT TILES */
+.proj {
+  transition: all 0.3s ease;
+}
+
+.proj:hover {
+  background-size: cover;
+  background-position: center;
+  transform: translateY(-4px);
+}
+
+.proj .proj-d, 
+.proj .proj-t, 
+.proj .proj-lang, 
+.proj .proj-n {
+  transition: all 0.2s ease;
+}
+
+.proj:hover .proj-n {
+  color: rgba(200,169,106,0.35);
 }
 </style>
 </head>
@@ -148,6 +169,8 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
     <li><a href="#projects">Projects</a></li>
     <li><a href="#talks-awards">Talks</a></li>
     <li><a href="#awards-section">Awards</a></li>
+    <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#services">Services</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <!-- Hire Me button removed -->
@@ -250,7 +273,51 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
 <div class="sec" style="padding-top:0" id="projects">
   <div class="sec-label">05 &mdash; Projects</div>
   <h2 class="sec-h">Computational work that <em>matters</em></h2>
-  <div class="proj-grid reveal"><div class="proj"><div class="proj-n">01</div><div class="proj-lang">C++ · FEM · Saddle-Point</div><div class="proj-t">Boundary Optimal Control for Biharmonic Equations</div><div class="proj-d">Mixed FEM solvers for boundary optimal control constrained by the biharmonic equation. Hermann–Miyoshi and Ciarlet–Raviart discretizations, lifting-function techniques, optimal convergence on large sparse systems.</div></div><div class="proj"><div class="proj-n">02</div><div class="proj-lang">C++ · Variational Formulations</div><div class="proj-t">Distributed Optimal Control via FEM</div><div class="proj-d">Distributed optimal control solvers for elliptic and biharmonic PDEs — error estimation, convergence studies, large-scale sparse linear systems with performance-aware scientific programming.</div></div><div class="proj"><div class="proj-n">03</div><div class="proj-lang">C++ · Inf-Sup Stability</div><div class="proj-t">Mixed FEM for Higher-Order PDEs</div><div class="proj-d">Mixed formulations for fourth-order PDEs reducing regularity requirements. Block-matrix structures, inf-sup stability, and scalable solver design connecting variational formulations with numerical linear algebra.</div></div><div class="proj"><div class="proj-n">04</div><div class="proj-lang">Python · PyTorch · PINN</div><div class="proj-t">Neural Network Solvers for DEs</div><div class="proj-d">Physics-informed neural networks approximating ODE solutions. Loss-based training, GPU-accelerated optimization, automatic differentiation — bridging classical numerical analysis with modern ML.</div></div><div class="proj"><div class="proj-n">05</div><div class="proj-lang">Python · Parallel · HPC</div><div class="proj-t">Parallel QR Factorization</div><div class="proj-d">QR Factorization with partial and full pivoting using shared-memory parallelism. Numerical stability analysis, flop counting, and scalability study relevant to GPU-accelerated HPC architectures.</div></div><div class="proj"><div class="proj-n">06</div><div class="proj-lang">C++ · JavaScript · p5.js</div><div class="proj-t">Computational STEM Programming</div><div class="proj-d">Designed hands-on C++ and JavaScript modules at TexPREP — Morse-code translators to Mandelbrot set visualizations — connecting mathematical modeling, algorithms, and scalable computation.</div></div></div>
+  <div class="proj-grid reveal">
+    
+    <div class="proj" style="background-image: linear-gradient(rgba(13,17,24,0.85), rgba(13,17,24,0.9)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop'); background-size: cover; background-position: center;">
+      <div class="proj-n">01</div>
+      <div class="proj-lang">C++ · FEM · Saddle-Point</div>
+      <div class="proj-t">Boundary Optimal Control for Biharmonic Equations</div>
+      <div class="proj-d">Mixed FEM solvers for boundary optimal control constrained by the biharmonic equation. Hermann–Miyoshi and Ciarlet–Raviart discretizations, lifting-function techniques, optimal convergence on large sparse systems.</div>
+    </div>
+
+    <div class="proj" style="background-image: linear-gradient(rgba(13,17,24,0.85), rgba(13,17,24,0.9)), url('https://images.unsplash.com/photo-1581092335871-5c5e0d6afc1b?w=600&h=400&fit=crop'); background-size: cover; background-position: center;">
+      <div class="proj-n">02</div>
+      <div class="proj-lang">C++ · Variational Formulations</div>
+      <div class="proj-t">Distributed Optimal Control via FEM</div>
+      <div class="proj-d">Distributed optimal control solvers for elliptic and biharmonic PDEs — error estimation, convergence studies, large-scale sparse linear systems with performance-aware scientific programming.</div>
+    </div>
+
+    <div class="proj" style="background-image: linear-gradient(rgba(13,17,24,0.85), rgba(13,17,24,0.9)), url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&h=400&fit=crop'); background-size: cover; background-position: center;">
+      <div class="proj-n">03</div>
+      <div class="proj-lang">C++ · Inf-Sup Stability</div>
+      <div class="proj-t">Mixed FEM for Higher-Order PDEs</div>
+      <div class="proj-d">Mixed formulations for fourth-order PDEs reducing regularity requirements. Block-matrix structures, inf-sup stability, and scalable solver design connecting variational formulations with numerical linear algebra.</div>
+    </div>
+
+    <div class="proj" style="background-image: linear-gradient(rgba(13,17,24,0.85), rgba(13,17,24,0.9)), url('https://images.unsplash.com/photo-1555255707-c07966088b7b?w=600&h=400&fit=crop'); background-size: cover; background-position: center;">
+      <div class="proj-n">04</div>
+      <div class="proj-lang">Python · PyTorch · PINN</div>
+      <div class="proj-t">Neural Network Solvers for DEs</div>
+      <div class="proj-d">Physics-informed neural networks approximating ODE solutions. Loss-based training, GPU-accelerated optimization, automatic differentiation — bridging classical numerical analysis with modern ML.</div>
+    </div>
+
+    <div class="proj" style="background-image: linear-gradient(rgba(13,17,24,0.85), rgba(13,17,24,0.9)), url('https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=600&h=400&fit=crop'); background-size: cover; background-position: center;">
+      <div class="proj-n">05</div>
+      <div class="proj-lang">Python · Parallel · HPC</div>
+      <div class="proj-t">Parallel QR Factorization</div>
+      <div class="proj-d">QR Factorization with partial and full pivoting using shared-memory parallelism. Numerical stability analysis, flop counting, and scalability study relevant to GPU-accelerated HPC architectures.</div>
+    </div>
+
+    <div class="proj" style="background-image: linear-gradient(rgba(13,17,24,0.85), rgba(13,17,24,0.9)), url('https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=600&h=400&fit=crop'); background-size: cover; background-position: center;">
+      <div class="proj-n">06</div>
+      <div class="proj-lang">C++ · JavaScript · p5.js</div>
+      <div class="proj-t">Computational STEM Programming</div>
+      <div class="proj-d">Designed hands-on C++ and JavaScript modules at TexPREP — Morse-code translators to Mandelbrot set visualizations — connecting mathematical modeling, algorithms, and scalable computation.</div>
+    </div>
+
+  </div>
 </div>
 
 <!-- Talks section (standalone) -->
@@ -267,7 +334,7 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
   </div>
 </div>
 
-<!-- Awards section standalone -->
+<!-- Awards section standalone - UPDATED WITH ALL AWARDS -->
 <div class="sec" style="padding-top:0" id="awards-section">
   <div class="sec-label">07 &mdash; Awards & Honors</div>
   <h2 class="sec-h">Recognition for <em>excellence</em></h2>
@@ -277,9 +344,80 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
     <div class="aw-card"><div class="aw-name">CBMS Conference Travel Grant</div><div class="aw-org">University of Houston</div><div class="aw-yr">December 2025</div></div>
     <div class="aw-card"><div class="aw-name">Texas Tech SIAM Scholarship Award</div><div class="aw-org">Texas Tech University</div><div class="aw-yr">August 2025</div></div>
     <div class="aw-card"><div class="aw-name">Thomas McLaughlin Scholarship</div><div class="aw-org">Texas Tech University</div><div class="aw-yr">August 2024</div></div>
-    <div class="aw-card"><div class="aw-name">Gordon Fuller Mathematics Scholarship</div><div class="aw-org">Texas Tech University</div><div class="aw-yr">August 2023</div></div>
-    <div class="aw-card"><div class="aw-name">International Presidential Graduate Scholarship</div><div class="aw-org">Texas A&amp;M University–Corpus Christi</div><div class="aw-yr">January 2021</div></div>
-    <div class="aw-card"><div class="aw-name">Outstanding Student Award &middot; 4.0 / 4.0</div><div class="aw-org">The Oxford College of Engineering, India</div><div class="aw-yr">June 2018</div></div>
+    <div class="aw-card"><div class="aw-name">Gordon Fuller Mathematics Scholarship Endowment</div><div class="aw-org">Texas Tech University</div><div class="aw-yr">August 2023</div></div>
+    <div class="aw-card"><div class="aw-name">International Presidential Graduate Scholarship</div><div class="aw-org">Texas A&amp;M University - Corpus Christi</div><div class="aw-yr">January 2021</div></div>
+    <div class="aw-card"><div class="aw-name">College of Science &amp; Engineering Graduate Scholarship</div><div class="aw-org">Texas A&amp;M University - Corpus Christi</div><div class="aw-yr">August 2020</div></div>
+    <div class="aw-card"><div class="aw-name">College of Science &amp; Engineering Graduate Scholarship</div><div class="aw-org">Texas A&amp;M University - Corpus Christi</div><div class="aw-yr">January 2020</div></div>
+    <div class="aw-card"><div class="aw-name">Outstanding Student Award (Topper in Academics) - 4.0/4.0</div><div class="aw-org">The Oxford College of Engineering, Karnataka, India</div><div class="aw-yr">June 2018</div></div>
+    <div class="aw-card"><div class="aw-name">Best Research Paper Award</div><div class="aw-org">National Conference on Science, Engineering, and Management, The Oxford College of Engineering, Karnataka, India</div><div class="aw-yr">April 2018</div></div>
+  </div>
+</div>
+
+<!-- Leadership Experience Section -->
+<div class="sec" style="padding-top:0" id="leadership">
+  <div class="sec-label">08 &mdash; Leadership</div>
+  <h2 class="sec-h">Leading with <em>purpose</em></h2>
+  <div class="reveal">
+    <div class="res-hero" style="padding: 1.8rem;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 1rem;">
+        <h3 style="font-family: var(--serif); font-size: 1.35rem; color: var(--ink); margin-bottom: 0.3rem;">Vice President, SIAM-TTU Student Chapter</h3>
+        <div style="font-family: var(--mono); font-size: 0.65rem; color: var(--gold);">June 2024 - May 2025</div>
+      </div>
+      <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--ink2); margin-bottom: 1rem;">Society for Industrial and Applied Mathematics (SIAM), Texas Tech University</div>
+      <ul style="margin-left: 1.5rem; color: var(--ink2); font-size: 0.88rem; line-height: 1.7;">
+        <li>Organized and led monthly meetings to plan chapter activities and initiatives. Responsible for hosting a colloquium and representing the chapter at university-wide events.</li>
+        <li>Founder of SIAM Math Quiz.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Services Section -->
+<div class="sec" style="padding-top: 0;" id="services">
+  <div class="sec-label">09 &mdash; Services</div>
+  <h2 class="sec-h">Giving back to the <em>community</em></h2>
+  <div class="talks reveal">
+    
+    <div class="talk">
+      <div class="talk-yr">March 2026 - Present</div>
+      <div>
+        <div class="talk-t">Math Circles Mentor</div>
+        <div class="talk-ev">Department of Mathematics and Statistics, Texas Tech University</div>
+      </div>
+    </div>
+    
+    <div class="talk">
+      <div class="talk-yr">February 2022, 2026</div>
+      <div>
+        <div class="talk-t">Judge - 70th Annual South Plains Regional Science and Engineering Fair</div>
+        <div class="talk-ev">Texas Tech University</div>
+      </div>
+    </div>
+    
+    <div class="talk">
+      <div class="talk-yr">February 2026</div>
+      <div>
+        <div class="talk-t">Judge - FIRST Robotics Competition</div>
+        <div class="talk-ev">Evaluated high school robotics projects based on engineering design, technical execution, and teamwork; provided constructive feedback to encourage innovation and problem-solving.</div>
+      </div>
+    </div>
+    
+    <div class="talk">
+      <div class="talk-yr">December 2025</div>
+      <div>
+        <div class="talk-t">Judge - Harmony Science Academy Science Fair</div>
+        <div class="talk-ev">Harmony Science Academy, Lubbock, Texas — Served as a judge for an annual K–8 science and engineering fair, evaluating student research projects across science, technology, engineering, art, and mathematics (STEAM).</div>
+      </div>
+    </div>
+    
+    <div class="talk">
+      <div class="talk-yr">May 2024, 2025</div>
+      <div>
+        <div class="talk-t">Volunteer - Emmy Noether Day</div>
+        <div class="talk-ev">Department of Mathematics and Statistics, Texas Tech University — Supported departmental outreach efforts through event setup, coordination, and interaction with students and faculty during mathematics-focused activities.</div>
+      </div>
+    </div>
+    
   </div>
 </div>
 
