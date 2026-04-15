@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Karthik Kumar Vasudeva — Photo Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080B10;--bg2:#0D1118;--bg3:#111620;
+  --surface:#141923;--surface2:#1A2030;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
+  --ink:#F0EDE8;--ink2:#9BA3B0;--ink3:#5A6270;
+  --gold:#C8A96A;--gold2:#D9B86C;
+  --mono:'JetBrains Mono',monospace;
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'Syne',sans-serif;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 3rem;display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:1px solid var(--border);background:rgba(8,11,16,0.95);backdrop-filter:blur(20px)}
+.nav-logo{font-family:var(--mono);font-size:0.75rem;color:var(--ink2);letter-spacing:0.12em;text-decoration:none}.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:var(--ink3);transition:color .2s}.nav-links a:hover{color:var(--gold)}
+.sec{padding:7rem 3rem 4rem;max-width:1400px;margin:0 auto}
+.sec-label{font-family:var(--mono);font-size:0.62rem;color:var(--gold);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:1rem}.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.sec-h{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);color:var(--ink);margin-bottom:2rem}.sec-h em{color:var(--gold);font-style:italic}
+
+/* Gallery Grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.8rem;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+}
+
+.gallery-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  cursor: pointer;
+}
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover .gallery-image {
+  transform: scale(1.05);
+}
+
+.gallery-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(8,11,16,0.95), transparent);
+  padding: 2rem 1rem 1rem 1rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+  transform: translateY(0);
+}
+
+.gallery-caption {
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 3rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--gold);
+  text-decoration: none;
+  border: 1px solid var(--gold);
+  padding: 10px 24px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+.back-link:hover {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:var(--bg)}
+.ft-l{font-family:var(--mono);font-size:0.8rem;color:var(--ink2)}
+.ft-r{display:flex;gap:2rem}.ft-r a{font-family:var(--mono);font-size:0.8rem;color:var(--ink3);text-decoration:none}.ft-r a:hover{color:var(--gold)}
+
+@media(max-width:900px){
+  nav{padding:0 1.5rem}.nav-links{display:none}
+  .sec{padding:5rem 1.5rem 3rem}
+  .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><span>//</span>&nbsp;KKV</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#research">Research</a></li>
+    <li><a href="index.html#teaching">Teaching</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#talks-awards">Talks</a></li>
+    <li><a href="index.html#awards-section">Awards</a></li>
+    <li><a href="index.html#leadership">Leadership</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="sec">
+  <div class="sec-label">Gallery</div>
+  <h2 class="sec-h">Moments from <em>academia & beyond</em></h2>
+  
+  <div class="gallery-grid">
+    
+    <div class="gallery-item">
+      <div class="gallery-image-wrapper">
+        <img src="images/photo1.jpg" alt="Gallery image 1" class="gallery-image">
+        <div class="gallery-overlay">
+          <div class="gallery-caption"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="gallery-item">
+      <div class="gallery-image-wrapper">
+        <img src="images/photo2.jpg" alt="Gallery image 2" class="gallery-image">
+        <div class="gallery-overlay">
+          <div class="gallery-caption"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="gallery-item">
+      <div class="gallery-image-wrapper">
+        <img src="images/photo3.jpg" alt="Gallery image 3" class="gallery-image">
+        <div class="gallery-overlay">
+          <div class="gallery-caption"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="gallery-item">
+      <div class="gallery-image-wrapper">
+        <img src="images/photo4.jpg" alt="Gallery image 4" class="gallery-image">
+        <div class="gallery-overlay">
+          <div class="gallery-caption"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="gallery-item">
+      <div class="gallery-image-wrapper">
+        <img src="images/photo5.jpg" alt="" class="gallery-image">
+        <div class="gallery-overlay">
+          <div class="gallery-caption">Coming Soon</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="gallery-item">
+      <div class="gallery-image-wrapper">
+        <img src="images/photo6.jpg" alt="" class="gallery-image">
+        <div class="gallery-overlay">
+          <div class="gallery-caption">Coming Soon</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Add more gallery items as needed -->
+    
+  </div>
+  
+  <div style="text-align: center;">
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-l">© 2026 Karthik Kumar Vasudeva &nbsp;&middot;&nbsp; Texas Tech University</div>
+  <div class="ft-r">
+    <a href="mailto:karthik.vasudeva@ttu.edu">Email</a>
+    <a href="https://linkedin.com/in/karthik-kumar-vasudeva-30a84114b" target="_blank">LinkedIn</a>
+    <a href="https://scholar.google.com/citations?user=VcZZf-4AAAAJ&hl=en" target="_blank">Scholar</a>
+    <a href="https://github.com/Karthikkumarvasudeva" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+<script>
+// Lightbox functionality
+const galleryWrappers = document.querySelectorAll('.gallery-image-wrapper');
+const lightbox = document.createElement('div');
+lightbox.id = 'lightbox';
+lightbox.style.cssText = `
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.95); display: none; justify-content: center;
+  align-items: center; z-index: 10000; cursor: pointer;
+`;
+const lightboxImg = document.createElement('img');
+lightboxImg.style.cssText = `
+  max-width: 90%; max-height: 90%; object-fit: contain;
+  border-radius: 8px; border: 2px solid var(--gold);
+`;
+lightbox.appendChild(lightboxImg);
+document.body.appendChild(lightbox);
+
+galleryWrappers.forEach(wrapper => {
+  const img = wrapper.querySelector('.gallery-image');
+  wrapper.addEventListener('click', (e) => {
+    e.stopPropagation();
+    lightboxImg.src = img.src;
+    lightbox.style.display = 'flex';
+  });
+});
+
+lightbox.addEventListener('click', () => {
+  lightbox.style.display = 'none';
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && lightbox.style.display === 'flex') {
+    lightbox.style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>
