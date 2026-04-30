@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    
-    <title>Karthik Kumar Vasudeva | PhD Candidate in Applied Mathematics</title>
-    
-    <link rel="canonical" href="https://karthikkumarvasudeva.github.io/" />
-    
-    <meta name="description" content="Official website of Karthik Vasudeva (Karthik Kumar Vasudeva), PhD Candidate and Instructor at Texas Tech University. Specialized in Finite Element Methods, Optimal Control, and Scientific Computing.">
-    
-    <meta name="keywords" content="Karthik Kumar Vasudeva, KKV, Texas Tech University Mathematics, Finite Element Methods, FEM, Mixed Biharmonic Equation, Applied Mathematics PhD">
-    <meta name="author" content="Karthik Kumar Vasudeva">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Karthik Kumar Vasudeva | PhD Candidate in Applied Mathematics</title>
+<link rel="canonical" href="https://karthikkumarvasudeva.github.io/" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+    <meta name="description" content="Official website of Karthik Vasudeva (Karthik Kumar Vasudeva), PhD Candidate at Texas Tech University specializing in Finite Element Methods and Scientific Computing.">
     
+    <meta name="keywords" content="Karthik Vasudeva, Karthik Kumar Vasudeva, Applied Mathematics, FEM, Texas Tech, Numerical Analysis">
+    <meta name="author" content="Karthik Vasudeva">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -28,14 +24,149 @@
   --mono:'JetBrains Mono',monospace;
   --serif:'Instrument Serif',Georgia,serif;
   --sans:'Syne',sans-serif;
+  }
+  
+  #cursor-ring.hover {
+  width: 60px;
+  height: 60px;
+  background: rgba(200, 169, 106, 0.1);
+  border-color: var(--gold);
+}
+
+
+/* LIGHT MODE */
+body.light-mode{
+  --bg:#F7F7F9;
+  --bg2:#FFFFFF;
+  --bg3:#F0F2F5;
+  --surface:#FFFFFF;
+  --surface2:#F4F6FA;
+
+  --border:rgba(0,0,0,0.08);
+  --border2:rgba(0,0,0,0.16);
+
+  --ink:#0D1117;
+  --ink2:#3A4250;
+  --ink3:#6B7280;
+
+  --gold:#B8964A;
+  --gold2:#A07D2F;
+  --gold-dim:rgba(184,150,74,0.25);
+}
+
+
+body.light-mode #cursor{
+  background:var(--gold2);
+  box-shadow: 0 0 6px rgba(160,125,47,0.35);
+}
+
+
+
+  /* THEME TOGGLE */
+.theme-toggle{
+  position:fixed;
+  top:18px;
+  left:18px;
+  z-index:200;
+  cursor:pointer;
+}
+
+.toggle-track{
+  width:50px;
+  height:26px;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  padding:3px;
+  transition:all 0.3s ease;
+}
+
+.toggle-thumb{
+width:20px;
+  height:20px;
+  border-radius:50%;
+  background:var(--gold);
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform 0.3s ease, background 0.3s ease;
+  box-shadow: 0 0 10px rgba(200,169,106,0.35);
+}
+
+/* icon base */
+.toggle-thumb .icon{
+  font-size:12px;
+  transition:all 0.3s ease;
+}
+
+body:not(.light-mode) .toggle-thumb .icon::before{
+  content:"☀";
+  color:#080B10;
+}
+
+
+body.light-mode .toggle-thumb .icon::before{
+  content:"🌙";
+  color:#0D1117;
+}
+
+
+
+
+/* ACTIVE STATE */
+body.light-mode .toggle-thumb{
+  transform:translateX(24px);
+}
+  
+  
+  
+  .sec {
+  position: relative; 
+  z-index: 2; 
+  padding: 7rem 3rem; 
+  max-width: 1200px; 
+  margin: 0 auto;
+  scroll-margin-top: 80px; /* Add it here to fix ALL sections at once */
+}
+
+
+#fem-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none; /* Crucial so it doesn't block link clicks */
+  opacity: 0.5; /* Makes it subtle and academic */
+}
+
+  
 }
 html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7;overflow-x:hidden;cursor:none}
-#cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:screen}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:17px;line-height:1.7;overflow-x:hidden;cursor:none}
+
+#cursor{
+  position:fixed;
+  width:10px;
+  height:10px;
+  background:var(--gold);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .2s,height .2s, background .3s ease;
+  
+}
+
+
 #cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(200,169,106,0.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s}
 #fem-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 3rem;display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:1px solid var(--border)}
-nav::before{content:'';position:absolute;inset:0;background:rgba(8,11,16,0.88);backdrop-filter:blur(20px);z-index:-1}
+nav::before{content:'';position:absolute;inset:0;background:var(--bg);backdrop-filter:blur(20px);z-index:-1}
 .nav-logo{font-family:var(--mono);font-size:0.75rem;color:var(--ink2);letter-spacing:0.12em;text-decoration:none}.nav-logo span{color:var(--gold)}
 .nav-links{display:flex;gap:2.5rem;list-style:none}
 .nav-links a{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:var(--ink3);transition:color .2s}.nav-links a:hover{color:var(--gold)}
@@ -166,6 +297,20 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
 </head>
 <body>
 
+
+
+<div class="theme-toggle" id="themeToggle">
+  <div class="toggle-track">
+    <div class="toggle-thumb">
+      <span class="icon"></span>
+    </div>
+  </div>
+</div>
+
+
+
+
+
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 <canvas id="fem-canvas"></canvas>
@@ -176,6 +321,7 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
     <li><a href="#about">About</a></li>
     <li><a href="#research">Research</a></li>
     <li><a href="#teaching">Teaching</a></li>
+     <li><a href="#skills">Technical Stack</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#talks-awards">Talks</a></li>
     <li><a href="#awards-section">Awards</a></li>
@@ -202,7 +348,7 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
 </p>
     <div class="hero-actions">
       <a href="mailto:karthik.vasudeva@ttu.edu" class="btn-gold">Get In Touch</a>
-      <a href="Karthik_CV_v14.pdf" target="_blank" class="btn-ghost">
+        <a href="Karthik_CV.pdf" target="_blank" class="btn-ghost">
     Download CV <span style="font-size: 0.8em; margin-left: 5px;">↓</span>
   </a>
       <a href="https://scholar.google.com/citations?user=VcZZf-4AAAAJ&hl=en" target="_blank" class="btn-ghost">Google Scholar ↗</a>
@@ -218,26 +364,17 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
   <div class="stat-cell"><div class="stat-n">12+</div><div class="stat-l">Courses Taught</div></div>
   <div class="stat-cell"><div class="stat-n">9</div><div class="stat-l">Awards & Scholarships</div></div>
 </div>
-
 -->
+
 
 <div class="sec" id="about">
   <div class="sec-label">01 &mdash; About</div>
   <h2 class="sec-h">Bridging rigorous <em>mathematics</em><br/>with scalable computation</h2>
   <div class="about-grid reveal">
     <div>
-   <!--   <p class="about-p">I am a <b>Doctoral Candidate and Instructor of Record</b> in the Department of Mathematics &amp; Statistics at Texas Tech University, advised by Dr. Eugenio Aulisa (Chair) and Dr. Giorgio Bornia (Co-Chair). My dissertation focuses on <b>Finite Element Methods for Boundary Control Problems Constrained by the Mixed Biharmonic Equation.</b></p>
-   -->
-   <p class="about-p" style="line-height: 1.8; max-width: 850px; font-size: 1.05rem; color: var(--ink2);">
-  I am a <strong>Doctoral Candidate and Instructor of Record</strong> in the Department of Mathematics & Statistics at Texas Tech University. 
-  Under the guidance of <strong>Dr. Eugenio Aulisa</strong> (Chair) and <strong>Dr. Giorgio Bornia</strong> (Co-Chair), 
-  my research focuses on the development and analysis of <em>Finite Element Methods for Boundary Control Problems 
-  Constrained by the Mixed Biharmonic Equation</em>. My work aims to bridge the gap between high-order partial 
-  differential equations and robust numerical implementations for complex control systems.
-</p>   
-      
-      <p class="about-p">My research sits at the intersection of numerical analysis, PDE-constrained optimization, and scientific computing. I design mixed finite element formulations, prove well-posedness and error estimates in Sobolev spaces, and implement <b>large-scale sparse saddle-point solvers in C++</b>  combining mathematical depth with engineering-grade software.</p>
-      <p class="about-p">As Instructor of Record for classes of <b>90–120 undergraduate students</b>, I have designed full courses — from College Algebra through Calculus III — including syllabi, lectures, exams, and computational assignments. I believe rigorous mathematics should be taught with clarity, enthusiasm, and purpose.</p>
+      <p class="about-p">I am a <b>Doctoral Candidate and Instructor of Record</b> in the Department of Mathematics &amp; Statistics at Texas Tech University, advised by Dr. Eugenio Aulisa (Chair) and Dr. Giorgio Bornia (Co-Chair). My dissertation focuses on Mixed Finite Element Methods for Boundary Control Problems Constrained by the Biharmonic Equation.</p>
+      <p class="about-p">My research sits at the intersection of numerical analysis, PDE-constrained optimization, and scientific computing. I design mixed finite element formulations, prove well-posedness and error estimates in Sobolev spaces, and implement large-scale sparse saddle-point solvers - combining mathematical depth with engineering-grade software.</p>
+      <p class="about-p">As Instructor of Record for classes of 90–120 undergraduate students, I have designed full courses - from College Algebra through Calculus III - including syllabi, lectures, exams, and computational assignments. I believe rigorous mathematics should be taught with clarity, enthusiasm, and purpose.</p>
     </div>
     <div class="sidebar">
       <div class="sitem"><div class="skey">Position</div><div class="sval">Doctoral Candidate &amp; Instructor of Record<br/>Texas Tech University</div></div>
@@ -259,7 +396,7 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
         <div class="edu-deg">Doctor of Philosophy in Applied Mathematics</div>
         <div class="edu-inst"><a href="https://www.depts.ttu.edu/math/" target="_blank" style="color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)">Texas Tech University</a> &middot; Lubbock, Texas, USA</div>
         <div class="edu-advisors">Advisors: <a href="https://www.depts.ttu.edu/math/facultystaff/bio.php?id=210" target="_blank">Dr. Eugenio Aulisa</a> &nbsp;|&nbsp; <a href="https://www.unibo.it/sitoweb/giorgio.bornia/en" target="_blank">Dr. Giorgio Bornia</a></div>
-        <div class="edu-note">Expected July 2026</div>
+        <div class="edu-note"> July 2026</div>
       </div>
     </div>
     <div class="edu-row">
@@ -289,10 +426,14 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
     </div>
     <div class="pubs">
       <div class="pub"><div class="pub-n">1</div><div><div class="pub-t">Distributed Control Approach for Boundary Control Problem Constrained by the Biharmonic Equation</div><div class="pub-m">Manuscript in preparation for submission to a peer-reviewed journal.</div></div><span class="pill pill-prep">In Prep</span></div>
-      <div class="pub"><div class="pub-n">2</div><div><div class="pub-t">Mixed Finite Element Methods for Boundary Control Problems Constrained by the Biharmonic Equation</div><div class="pub-m">Abstract accepted &mdash; 15th AIMS Conference, Athens, Greece, 2026.</div></div><span class="pill pill-prep">In Prep</span></div>
-      <div class="pub"><div class="pub-n">4</div><div><div class="pub-t">Finite element model for a coupled thermo-mechanical system in nonlinear strain-limiting thermoelastic body</div><div class="pub-m">Yoon, H.C., Vasudeva, K.K., &amp; Mallikarjunaiah, S.M. &mdash; Communications in Nonlinear Science and Numerical Simulation, 2022.</div></div><span class="pill pill-pub">Published</span></div>
-      <div class="pub"><div class="pub-n">3</div><div><div class="pub-t">M.S. Thesis: Finite Element Model for a Coupled Thermo-Mechanical System in Nonlinear Strain-Limiting Thermoelastic Body</div><div class="pub-m">Vasudeva, K.K. &mdash; Texas A&amp;M University–Corpus Christi, 2021.</div></div><span class="pill pill-pub">Master's Thesis</span></div>
-      <div class="pub"><div class="pub-n">5</div><div><div class="pub-t">Unifying Sky and Chain: A Perspective on Blockchain's Role in UAV Swarms</div><div class="pub-m">Phadke, A., Sekharan, C.N., Vasudeva, K.K., Kar, D. &mdash; 2024 2nd International Conference on AI, Blockchain, and IoT (AIBThings). IEEE, 2024.</div></div><span class="pill pill-pub">Published</span></div>
+      <div class="pub"><div class="pub-n">2</div><div><div class="pub-t">Mixed Finite Element Methods for Boundary Control Problems Constrained by the Biharmonic Equation</div><div class="pub-m"> 15th AIMS Conference, Athens, Greece, 2026.</div></div><span class="pill pill-prep">In Prep</span></div>
+            <div class="pub"><div class="pub-n">3</div><div><div class="pub-t">Generalized Mathematical Models for Unoccupied aerial vehicles in a simulated environment</div><div class="pub-m">Manuscript in preparation for submission to a peer-reviewed journal.</div></div><span class="pill pill-prep">In Prep</span></div>
+      <div class="pub"><div class="pub-n">4</div><div><div class="pub-t">SwarmFly: A comprehensive simulation tool for UAV swarm experiment design and validation.</div><div class="pub-m">Manuscript in preparation for submission to a peer-reviewed journal.</div></div><span class="pill pill-prep">In Prep</span></div>
+ 
+      
+      <div class="pub"><div class="pub-n">5</div><div><div class="pub-t">Finite element model for a coupled thermo-mechanical system in nonlinear strain-limiting thermoelastic body</div><div class="pub-m">Yoon, H.C., Vasudeva, K.K., &amp; Mallikarjunaiah, S.M. &mdash; Communications in Nonlinear Science and Numerical Simulation, 2022.</div></div><span class="pill pill-pub">Published</span></div>
+      <div class="pub"><div class="pub-n">6</div><div><div class="pub-t">M.S. Thesis: Finite Element Model for a Coupled Thermo-Mechanical System in Nonlinear Strain-Limiting Thermoelastic Body</div><div class="pub-m">Vasudeva, K.K. &mdash; Texas A&amp;M University–Corpus Christi, 2021.</div></div><span class="pill pill-pub">Master's Thesis</span></div>
+      <div class="pub"><div class="pub-n">7</div><div><div class="pub-t">Unifying Sky and Chain: A Perspective on Blockchain's Role in UAV Swarms</div><div class="pub-m">Phadke, A., Sekharan, C.N., Vasudeva, K.K., Kar, D. &mdash; 2024 2nd International Conference on AI, Blockchain, and IoT (AIBThings). IEEE, 2024.</div></div><span class="pill pill-pub">Published</span></div>
     </div>
   </div>
 </div>
@@ -300,12 +441,100 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
 <div class="sec" style="padding-top:0" id="teaching">
   <div class="sec-label">04 &mdash; Teaching</div>
   <h2 class="sec-h">Courses <em>designed</em> &amp; delivered</h2>
-  <p class="t-intro">Instructor of Record for 90–120 student undergraduate classes. Full course design — syllabus, lectures, exams, and programming-based assignments emphasizing mathematical rigor and computational thinking.</p>
-  <div class="t-grid reveal"><div class="t-group"><div class="t-label">Texas Tech University &mdash; Instructor of Record (2022–2026)</div><div class="c-row"><span class="c-name">Calculus III (Math 2450)</span><span class="c-term">Summer 2026</span></div><div class="c-row"><span class="c-name">Calculus II (Math 1452)</span><span class="c-term">Spring 2026</span></div><div class="c-row"><span class="c-name">Intro Mathematical Analysis I (Math 1330)</span><span class="c-term">Fall 2025</span></div><div class="c-row"><span class="c-name">Linear Algebra (Math 2360)</span><span class="c-term">Summer 2025</span></div><div class="c-row"><span class="c-name">Calculus I (Math 1451)</span><span class="c-term">Spring 2025</span></div><div class="c-row"><span class="c-name">Calculus I (Math 1451)</span><span class="c-term">Summer &amp; Spring 2024</span></div><div class="c-row"><span class="c-name">College Algebra (Math 1320)</span><span class="c-term">Fall 2023</span></div><div class="c-row"><span class="c-name">Intro Math Analysis II (Math 1331)</span><span class="c-term">Spring 2023</span></div><div class="c-row"><span class="c-name">Intro Math Analysis I (Math 1330)</span><span class="c-term">Summer 2023, Fall 2022</span></div></div><div class="t-group"><div class="t-label">TexPREP-Lubbock &mdash; Teaching Faculty (2024–2026)</div><div class="c-row"><span class="c-name">Introduction to C++ Programming</span><span class="c-term">2024, 2025, 2026</span></div><div class="c-row"><span class="c-name">Programming with JavaScript I &amp; II</span><span class="c-term">2024, 2025, 2026</span></div><div class="c-row"><span class="c-name">Introduction to Python</span><span class="c-term">Summer 2026</span></div><div class="t-label" style="margin-top:1.75rem">Texas A&amp;M CC &mdash; GTA (2019–2021)</div><div class="c-row"><span class="c-name">Calculus I, II &amp; III</span><span class="c-term">2019–2021</span></div><div class="c-row"><span class="c-name">Statistics for Life (Math 1442)</span><span class="c-term">2019</span></div></div></div>
+  <p class="t-intro">Instructor of Record for 90-120 student undergraduate classes. Full course design -- syllabus, lectures, exams, and programming based assignments emphasizing mathematical rigor and computational thinking.</p>
+  
+  <div class="t-grid reveal">
+    <div class="t-group">
+      <div class="t-label">Texas Tech University &mdash; Instructor of Record (2022–Present)</div>
+      <div class="c-row"><span class="c-name">Calculus III (Math 2450)</span><span class="c-term">Summer 2026</span></div>
+      <div class="c-row"><span class="c-name">Calculus II (Math 1452)</span><span class="c-term">Spring 2026</span></div>
+      <div class="c-row"><span class="c-name">Intro Mathematical Analysis I (Math 1330)</span><span class="c-term">Fall 2025</span></div>
+      <div class="c-row"><span class="c-name">Linear Algebra (Math 2360)</span><span class="c-term">Summer 2025</span></div>
+      <div class="c-row"><span class="c-name">Calculus I (Math 1451)</span><span class="c-term">Spring 2025</span></div>
+      <div class="c-row"><span class="c-name">Calculus I (Math 1451)</span><span class="c-term">Summer &amp; Spring 2024</span></div>
+      <div class="c-row"><span class="c-name">College Algebra (Math 1320)</span><span class="c-term">Fall 2023</span></div>
+      <div class="c-row"><span class="c-name">Intro Math Analysis II (Math 1331)</span><span class="c-term">Spring 2023</span></div>
+      <div class="c-row"><span class="c-name">Intro Math Analysis I (Math 1330)</span><span class="c-term">Summer 2023, Fall 2022</span></div>
+    </div>
+
+    <div class="t-group">
+      <div class="t-label">TexPREP-Lubbock &mdash; Teaching Faculty (2024–Present)</div>
+      <div class="c-row"><span class="c-name">Introduction to C++ Programming</span><span class="c-term">2024–2026</span></div>
+      <div class="c-row"><span class="c-name">Programming with JavaScript I &amp; II</span><span class="c-term">2024–2026</span></div>
+      <div class="c-row" style="margin-bottom: 2rem;"><span class="c-name">Introduction to Python</span><span class="c-term">Summer 2026</span></div>
+
+      <div class="t-label" style="color: var(--gold); border-top: 1px solid var(--border); padding-top: 1.5rem; margin-top: 1rem;">
+        Texas Tech &mdash; Graduate Teaching Assistant (2021–2022)
+      </div>
+      <div class="c-row"><span class="c-name">Intro Math Analysis I &amp; II (1330/1331)</span><span class="c-term">2021–2022</span></div>
+      <div class="c-row" style="margin-bottom: 2rem;"><span class="c-name">Analytical Geometry (Math 1350)</span><span class="c-term">2021</span></div>
+
+      <div class="t-label" style="border-top: 1px solid var(--border); padding-top: 1.5rem;">
+  Texas A&M CC — Graduate Teaching Assistant (2019–2021)
+</div>
+<div class="c-row">
+  <span class="c-name">Calculus I & II (MATLAB-Integrated)</span>
+  <span class="c-term">2019–2020</span>
+</div>
+<div class="c-row">
+  <span class="c-name">Calculus III</span>
+  <span class="c-term">2021</span>
+</div>
+<div class="c-row">
+  <span class="c-name">Statistics for Life</span>
+  <span class="c-term">2019</span>
+</div>      </div>
+    </div>
+  </div>
 </div>
 
+
+
+<div class="sec" style="padding-top:0" id="skills">
+  <div class="sec-label">05 — Technical Stack</div>
+  <h2 class="sec-h">Software & <em>Scientific</em> Computing</h2>
+  <div class="sk-grid reveal">
+    
+    <div class="sk-block">
+      <div class="sk-block-t">Languages & HPC</div>
+      <div class="sk-list">
+        <div class="sk-item">C++ (High Performance )</div>
+        <div class="sk-item">Python (PyTorch, NumPy, SciPy)</div>
+        <div class="sk-item">MATLAB </div>
+        <div class="sk-item">OpenMP & MPI (Parallel Computing)</div>
+        <div class="sk-item">JavaScript & p5.js</div>
+      </div>
+    </div>
+
+    <div class="sk-block">
+      <div class="sk-block-t">Mathematical Software</div>
+      <div class="sk-list">
+        <div class="sk-item">Finite Element software libraries</div>
+        <div class="sk-item">Sparse Linear Solvers (Saddle-point)</div>
+        <div class="sk-item">LaTeX & Overleaf (Expert)</div>
+        <div class="sk-item">Git / GitHub</div>
+        <div class="sk-item">ParaView (Scientific Visualization & Post-Processing)</div>
+      </div>
+    </div>
+
+    <div class="sk-block">
+      <div class="sk-block-t">Hardware & Environment</div>
+      <div class="sk-list">
+        <div class="sk-item">Linux / Unix Shell Scripting</div>
+        <div class="sk-item">Multi-threaded Optimization (OpenMP)</div>
+        <div class="sk-item">Distributed Computing Concepts (MPI)</div>
+        <div class="sk-item">Numerical Linear Algebra</div>
+        <div class="sk-item">Sparse Matrix Data Structures</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
 <div class="sec" style="padding-top:0" id="projects">
-  <div class="sec-label">05 &mdash; Projects</div>
+  <div class="sec-label">06 &mdash; Projects</div>
   <h2 class="sec-h">Computational work that <em>matters</em></h2>
   <div class="proj-grid reveal">
     
@@ -348,29 +577,70 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
       <div class="proj-n">06</div>
       <div class="proj-lang">C++ · JavaScript · p5.js</div>
       <div class="proj-t">Computational STEM Programming</div>
-      <div class="proj-d">Designed hands-on C++ and JavaScript modules at TexPREP — Morse-code translators to Mandelbrot set visualizations — connecting mathematical modeling, algorithms, and scalable computation.</div>
+      <div class="proj-d">Designed hands-on C++ and JavaScript modules at TexPREP - Morse-code translators to Mandelbrot set visualizations - connecting mathematical modeling, algorithms, and scalable computation.</div>
     </div>
 
   </div>
 </div>
 
-<!-- Talks section (standalone) -->
 <div class="sec" style="padding-top:0" id="talks-awards">
-  <div class="sec-label">06 &mdash; Talks & Presentations</div>
+  <div class="sec-label">06 — Talks & Presentations</div>
   <h2 class="sec-h">Sharing the <em>work</em></h2>
   <div class="talks reveal">
-    <div class="talk"><div class="talk-yr">Apr 2026</div><div><div class="talk-t">Boundary Optimal Control Problem Constrained by the Fourth-Order Elliptic PDE</div><div class="talk-ev">Annual Cross-Disciplinary Faculty Conference, Texas Tech University</div></div></div>
-    <div class="talk"><div class="talk-yr">Mar 2026</div><div><div class="talk-t">Mixed FEM for Optimal Control Problems Constrained by the Biharmonic Equation</div><div class="talk-ev">Graduate Student Research Day, SIAM Chapter, Texas Tech University</div></div></div>
-    <div class="talk"><div class="talk-yr">Mar 2026</div><div><div class="talk-t">Distributed Control Approach for Boundary Control Problems — Biharmonic Equation (Poster)</div><div class="talk-ev">25th Annual Graduate Poster Competition, Texas Tech University</div></div></div>
-    <div class="talk"><div class="talk-yr">Dec 2025</div><div><div class="talk-t">Mixed FEM for Boundary Control Problems Constrained by the Biharmonic Equation</div><div class="talk-ev">CBMS Conference — Research at the Interface of Applied Mathematics &amp; Machine Learning, University of Houston</div></div></div>
-    <div class="talk"><div class="talk-yr">Mar 2022</div><div><div class="talk-t">On a Finite Element Model for Two-Dimensional Thermoelastic Problem</div><div class="talk-ev">Graduate Student Research Day, SIAM Chapter, Texas Tech University</div></div></div>
-    <div class="talk"><div class="talk-yr">2021</div><div><div class="talk-t">On a Finite Element Model for Implicit Thermoelasticity</div><div class="talk-ev">5th Coastal Bend Mathematics &amp; Statistics Conference, Texas A&amp;M University–San Antonio</div></div></div>
+    
+    <div class="talk">
+      <div class="talk-yr">Apr 2026</div>
+      <div class="talk-content">
+        <div class="talk-t">Boundary Optimal Control Problem Constrained by the Fourth-Order Elliptic PDE</div>
+        <div class="talk-ev">Annual Cross-Disciplinary Faculty Conference, Texas Tech University</div>
+      </div>
+    </div>
+
+    <div class="talk">
+      <div class="talk-yr">Mar 2026</div>
+      <div class="talk-content">
+        <div class="talk-t">Mixed FEM for Optimal Control Problems Constrained by the Biharmonic Equation</div>
+        <div class="talk-ev">Graduate Student Research Day, SIAM Chapter, Texas Tech University</div>
+      </div>
+    </div>
+
+    <div class="talk">
+      <div class="talk-yr">Mar 2026</div>
+      <div class="talk-content">
+        <div class="talk-t">Distributed Control Approach for Boundary Control Problems — Biharmonic Equation (Poster)</div>
+        <div class="talk-ev">25th Annual Graduate Poster Competition, Texas Tech University</div>
+      </div>
+    </div>
+
+    <div class="talk">
+      <div class="talk-yr">Dec 2025</div>
+      <div class="talk-content">
+        <div class="talk-t">Mixed FEM for Boundary Control Problems Constrained by the Biharmonic Equation</div>
+        <div class="talk-ev">CBMS Conference — University of Houston</div>
+      </div>
+    </div>
+
+    <div class="talk">
+      <div class="talk-yr">Mar 2022</div>
+      <div class="talk-content">
+        <div class="talk-t">On a Finite Element Model for Two-Dimensional Thermoelastic Problem</div>
+        <div class="talk-ev">Graduate Student Research Day, SIAM Chapter, Texas Tech University</div>
+      </div>
+    </div>
+
+    <div class="talk">
+      <div class="talk-yr">April 2021</div>
+      <div class="talk-content">
+        <div class="talk-t">On a Finite Element Model for Implicit Thermoelasticity</div>
+        <div class="talk-ev">5th Coastal Bend Mathematics & Statistics Conference, TAMU-SA</div>
+      </div>
+    </div>
+
   </div>
 </div>
-
 <!-- Awards section standalone - UPDATED WITH ALL AWARDS -->
 <div class="sec" style="padding-top:0" id="awards-section">
-  <div class="sec-label">07 &mdash; Awards & Honors</div>
+  <div class="sec-label">08 &mdash; Awards & Honors</div>
   <h2 class="sec-h">Recognition for <em>excellence</em></h2>
   <div class="aw-grid reveal">
     <div class="aw-card"><div class="aw-name">SIAM Teaching Award</div><div class="aw-org">Texas Tech University</div><div class="aw-yr">April 2026</div></div>
@@ -389,7 +659,7 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
 
 <!-- Leadership Experience Section -->
 <div class="sec" style="padding-top:0" id="leadership">
-  <div class="sec-label">08 &mdash; Leadership</div>
+  <div class="sec-label">09 &mdash; Leadership</div>
   <h2 class="sec-h">Leading with <em>purpose</em></h2>
   <div class="reveal">
     <div class="res-hero" style="padding: 1.8rem;">
@@ -408,7 +678,7 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
 
 <!-- Services Section -->
 <div class="sec" style="padding-top: 0;" id="services">
-  <div class="sec-label">09 &mdash; Services</div>
+  <div class="sec-label">10 &mdash; Services</div>
   <h2 class="sec-h">Giving back to the <em>community</em></h2>
   <div class="talks reveal">
     
@@ -462,7 +732,7 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
 
 
 <div class="sec" style="padding-top:0" id="contact">
-  <div class="sec-label">10 &mdash; Contact</div>
+  <div class="sec-label">11 &mdash; Contact</div>
   <div class="ct-grid reveal">
     <div><h2 class="ct-big">Let's build<br/>something <em>rigorous</em></h2><p class="ct-sub">Open to faculty positions, postdoctoral opportunities, research collaborations, and teaching roles in applied &amp; computational mathematics.</p><div class="ct-links"><a href="mailto:karthik.vasudeva@ttu.edu" class="ct-link"><div><div class="ct-link-lbl">Email</div>karthik.vasudeva@ttu.edu</div><span class="ct-arr">→</span></a><a href="tel:+19793180822" class="ct-link"><div><div class="ct-link-lbl">Phone</div>(979) 318-0822</div><span class="ct-arr">→</span></a><a href="https://linkedin.com/in/karthik-kumar-vasudeva-30a84114b" target="_blank" class="ct-link"><div><div class="ct-link-lbl">LinkedIn</div>linkedin.com/in/karthik-kumar-vasudeva</div><span class="ct-arr">→</span></a><a href="https://scholar.google.com/citations?user=VcZZf-4AAAAJ&hl=en" target="_blank" class="ct-link"><div><div class="ct-link-lbl">Google Scholar</div>View All Publications</div><span class="ct-arr">→</span></a><a href="https://github.com/Karthikkumarvasudeva" target="_blank" class="ct-link"><div><div class="ct-link-lbl">GitHub</div>github.com/Karthikkumarvasudeva</div><span class="ct-arr">→</span></a></div></div>
     <div class="ct-info"><div class="ct-info-row"><div class="ct-info-k">Department</div><div class="ct-info-v">Mathematics &amp; Statistics</div></div><div class="ct-info-row"><div class="ct-info-k">Institution</div><div class="ct-info-v">Texas Tech University</div></div><div class="ct-info-row"><div class="ct-info-k">Location</div><div class="ct-info-v">Lubbock, Texas 79409, USA</div></div><div class="ct-info-row"><div class="ct-info-k">Status</div><div class="ct-info-v">Doctoral Candidate — Expected July 2026</div></div><div class="ct-info-row"><div class="ct-info-k">Open To</div><div class="ct-info-v">Faculty &middot; Postdoc &middot; Research Collaboration</div></div></div>
@@ -501,7 +771,7 @@ document.querySelectorAll('a,button').forEach(el=>{
     ctx.clearRect(0,0,W,H);
     for(const[ai,bi,ci]of tris){const a=gp(nodes[ai],time),b=gp(nodes[bi],time),c=gp(nodes[ci],time); ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.lineTo(c.x,c.y); ctx.closePath();ctx.fillStyle='rgba(200,169,106,0.022)';ctx.fill();}
     const drawn=new Set();
-    for(const[ai,bi,ci]of tris){for(const[p1,p2]of[[ai,bi],[bi,ci],[ai,ci]]){const k=p1<p2?`${p1}-${p2}`:`${p2}-${p1}`; if(drawn.has(k))continue; drawn.add(k); const pa=gp(nodes[p1],time),pb=gp(nodes[p2],time); const emx=(pa.x+pb.x)/(2*W)-.5,emy=(pa.y+pb.y)/(2*H)-.5; const dist=Math.sqrt(emx*emx+emy*emy); const alpha=Math.max(0,.5-dist*1.1); ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y); ctx.strokeStyle='#C8A96A';ctx.lineWidth=.65; ctx.globalAlpha=.06+alpha*.2;ctx.stroke();ctx.globalAlpha=1;}}
+    for(const[ai,bi,ci]of tris){for(const[p1,p2]of[[ai,bi],[bi,ci],[ai,ci]]){const k=p1<p2?`${p1}-${p2}`:`${p2}-${p1}`; if(drawn.has(k))continue; drawn.add(k); const pa=gp(nodes[p1],time),pb=gp(nodes[p2],time); const emx=(pa.x+pb.x)/(2*W)-.5,emy=(pa.y+pb.y)/(2*H)-.5; const dist=Math.sqrt(emx*emx+emy*emy); const alpha=Math.max(0,.5-dist*1.1); ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y); ctx.strokeStyle='#C8A96A';ctx.lineWidth=1.0; ctx.globalAlpha=.15+alpha*.2;ctx.stroke();ctx.globalAlpha=1;}}
     for(let i=0;i<nodes.length;i++){const pt=gp(nodes[i],time); if(pt.x<-100||pt.x>W+100||pt.y<-100||pt.y>H+100)continue; const d=Math.abs(Math.sin(time*nodes[i].freq+nodes[i].phase)); ctx.beginPath();ctx.arc(pt.x,pt.y,1.4+d*3,0,Math.PI*2); ctx.fillStyle='#C8A96A';ctx.globalAlpha=.08+d*.52;ctx.fill();ctx.globalAlpha=1;}
     for(let w=0;w<4;w++){const ph=time*.28+w*1.57; const cx=(.15+w*.22)*W+Math.sin(time*.09+w*2.1)*W*.08; const cy=(.2+w*.18)*H+Math.cos(time*.07+w*1.7)*H*.08; const prog=ph%1; ctx.beginPath();ctx.arc(cx,cy,prog*200,0,Math.PI*2); ctx.strokeStyle='#C8A96A';ctx.lineWidth=1.2; ctx.globalAlpha=(1-prog)*.15;ctx.stroke();ctx.globalAlpha=1;}
   }
@@ -512,6 +782,57 @@ document.querySelectorAll('a,button').forEach(el=>{
 /* SCROLL REVEAL */
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.08});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+
+/* THEME TOGGLE */
+const toggle = document.getElementById("themeToggle");
+const body = document.body;
+
+// Load saved theme
+if(localStorage.getItem("theme") === "light"){
+  body.classList.add("light-mode");
+}
+
+toggle.addEventListener("click", () => {
+  body.classList.toggle("light-mode");
+
+  // Save preference
+  if(body.classList.contains("light-mode")){
+    localStorage.setItem("theme","light");
+  } else {
+    localStorage.setItem("theme","dark");
+  }
+});
+
+
+
+
+
+
+
+
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
