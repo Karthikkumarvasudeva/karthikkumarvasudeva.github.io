@@ -17,11 +17,153 @@
   --serif:'Instrument Serif',Georgia,serif;
   --sans:'Syne',sans-serif;
 }
+
+
+body.light-mode{
+  --bg:#F7F7F9;
+  --bg2:#FFFFFF;
+  --bg3:#F0F2F5;
+  --surface:#FFFFFF;
+  --surface2:#F4F6FA;
+
+  --border:rgba(0,0,0,0.08);
+  --border2:rgba(0,0,0,0.16);
+
+  --ink:#0D1117;
+  --ink2:#3A4250;
+  --ink3:#6B7280;
+
+  --gold:#B8964A;
+  --gold2:#A07D2F;
+    --gold-dim:rgba(184,150,74,0.25);
+}
+
+
+.theme-toggle{
+  position: fixed;
+  top: 80px;
+  left: 18px;
+  z-index: 200;
+  cursor: pointer;
+}
+
+.toggle-track{
+  width:50px;
+  height:26px;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  padding:3px;
+  transition:all 0.3s ease;
+}
+
+/* Example to fix toggle position at the top of the screen */
+.toggle-switch {
+    position: fixed; /* Keep it fixed at the top */
+    top: 10px; /* Adjust the position as needed */
+    left: 20px; /* Adjust left position if needed */
+    z-index: 999; /* Ensure it stays on top of other content */
+}
+
+.theme-toggle{
+  position:fixed;
+  top:18px;
+  left:18px;
+  z-index:200;
+  cursor:pointer;
+}
+
+.toggle-thumb{
+width:20px;
+  height:20px;
+  border-radius:50%;
+  background:var(--gold);
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform 0.3s ease, background 0.3s ease;
+  box-shadow: 0 0 10px rgba(200,169,106,0.35);
+}
+
+/* icon base */
+.toggle-thumb .icon{
+  font-size:12px;
+  transition:all 0.3s ease;
+}
+
+
+
+
+
+body.light-mode .toggle-thumb {
+  transform: translateX(24px);
+}
+
+:root{
+  --nav-pad: 3rem;
+}
+
+
+
+
+
+
+
+
+
 body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7;overflow-x:hidden}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 3rem;display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:1px solid var(--border);background:rgba(8,11,16,0.95);backdrop-filter:blur(20px)}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg); /* Dark or light background depending on mode */
+  backdrop-filter: blur(20px);
+}
+
+body.light-mode nav {
+  background: var(--bg2); /* Lighter background for light mode */
+}
+
+
 .nav-logo{font-family:var(--mono);font-size:0.75rem;color:var(--ink2);letter-spacing:0.12em;text-decoration:none}.nav-logo span{color:var(--gold)}
 .nav-links{display:flex;gap:2.5rem;list-style:none}
-.nav-links a{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:var(--ink3);transition:color .2s}.nav-links a:hover{color:var(--gold)}
+
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink3); /* This is the default color in dark mode */
+  transition: color 0.2s ease;
+}
+
+body.light-mode .nav-links a {
+  color: var(--ink); /* Lighter color for light mode */
+}
+
+.nav-links a:hover {
+  color: var(--gold); /* Gold color on hover */
+}
+
+.nav-links a.active {
+  color: var(--gold); /* Active section gets a gold color */
+  font-weight: bold;
+}
+
+
 .sec{padding:7rem 3rem 4rem;max-width:1400px;margin:0 auto}
 .sec-label{font-family:var(--mono);font-size:0.62rem;color:var(--gold);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:1rem}.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
 .sec-h{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);color:var(--ink);margin-bottom:2rem}.sec-h em{color:var(--gold);font-style:italic}
@@ -120,12 +262,25 @@ footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify
 </head>
 <body>
 
+
+
+<div class="theme-toggle" id="themeToggle">
+  <div class="toggle-track">
+    <div class="toggle-thumb">
+      <span class="icon">☀</span>
+    </div>
+  </div>
+</div>
+
+
+
 <nav>
   <a href="index.html" class="nav-logo"><span>//</span>&nbsp;KKV</a>
   <ul class="nav-links">
     <li><a href="index.html#about">About</a></li>
     <li><a href="index.html#research">Research</a></li>
     <li><a href="index.html#teaching">Teaching</a></li>
+     <li><a href="index.html#Technical Stack">Technical Stack</a></li>
     <li><a href="index.html#projects">Projects</a></li>
     <li><a href="index.html#talks-awards">Talks</a></li>
     <li><a href="index.html#awards-section">Awards</a></li>
@@ -250,5 +405,38 @@ document.addEventListener('keydown', (e) => {
   }
 });
 </script>
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("themeToggle");
+  const body = document.body;
+  const icon = document.querySelector(".toggle-thumb .icon");
+
+  // load saved theme
+  if (localStorage.getItem("theme") === "light") {
+    body.classList.add("light-mode");
+    icon.textContent = "🌙";
+  } else {
+    icon.textContent = "☀";
+  }
+
+  toggle.addEventListener("click", () => {
+    body.classList.toggle("light-mode");
+
+    const isLight = body.classList.contains("light-mode");
+
+    icon.textContent = isLight ? "🌙" : "☀";
+
+    localStorage.setItem("theme", isLight ? "light" : "dark");
+  });
+});
+</script>
+
+
+
+
 </body>
 </html>
